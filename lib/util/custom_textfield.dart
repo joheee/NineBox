@@ -5,11 +5,13 @@ class CustomTextfield extends StatelessWidget {
 
   final String text;
   final Icon icon;
+  final TextEditingController controller;
 
   const CustomTextfield({
     super.key,
     required this.text,
-    required this.icon
+    required this.icon,
+    required this.controller,
   });
 
   @override
@@ -30,6 +32,7 @@ class CustomTextfield extends StatelessWidget {
           ), 
         ),
       ),
+      controller: controller,
       keyboardType: TextInputType.text, 
       obscureText: false, 
       maxLines: 1, 
