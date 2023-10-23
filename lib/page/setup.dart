@@ -17,20 +17,35 @@ class SetupPage extends StatefulWidget {
 class _SetupPageState extends State<SetupPage> {
   
   final Future<SharedPreferences> sharePref = SharedPreferences.getInstance();
-  
+  final List<String> list = <String>['Gampang', 'Sedang', 'Susah'];
+  TextEditingController firstPlayer = TextEditingController();
+  TextEditingController secondPlayer = TextEditingController();
+  TextEditingController totalRound = TextEditingController();
+  String difficulty = 'Gampang';
+
+  @override
+  void initState() {
+    super.initState();
+    sharePref.then((SharedPreferences prefs) {
+      firstPlayer.text = prefs.getString('firstPlayer') ?? '';
+    });
+    sharePref.then((SharedPreferences prefs) {
+      secondPlayer.text = prefs.getString('secondPlayer') ?? '';
+    });
+    sharePref.then((SharedPreferences prefs) {
+      totalRound.text = prefs.getString('totalRound') ?? '1';
+    });
+    sharePref.then((SharedPreferences prefs) {
+      difficulty = prefs.getString('difficulty') ?? 'Gampang';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    const List<String> list = <String>['Gampang', 'Sedang', 'Susah'];
-    TextEditingController firstPlayer = TextEditingController();
-    TextEditingController secondPlayer = TextEditingController();
-    TextEditingController totalRound = TextEditingController();
-    String difficulty = list.first;
 
     void handleDropdown(String? t) {
       difficulty = t!;
     }    
-
 
     void handleStart() {
       String firstPlayerString = firstPlayer.text;
@@ -61,6 +76,14 @@ class _SetupPageState extends State<SetupPage> {
         CustomAlertDialog.showErrorDialog(context, 'jumlah ronde di antara 1-10!');
         return;
       }
+
+      // STORE TO SHAREPREFS
+      sharePref.then((value) {
+        value.setString('firstPlayer', firstPlayerString);
+        value.setString('secondPlayer', secondPlayerString);
+        value.setString('totalRound', totalRoundString);
+        value.setString('difficulty', difficulty);
+      });
     }
 
     return DefaultLayout(
@@ -99,7 +122,7 @@ class _SetupPageState extends State<SetupPage> {
             CustomTextfield(
               text: "Jumlah Ronde",
               icon: Icon(
-                Icons.person,
+                Icons.play_arrow,
                 color: Variable.secondaryColor,
               ),
               controller: totalRound,
