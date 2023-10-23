@@ -36,7 +36,7 @@ class _GamePageState extends State<GamePage> {
         Padding(
           padding: Variable.defaultPadding,
           child: SizedBox(
-            height: 440,
+            height: 390,
             child: GridView.count(
               crossAxisCount: 3,
               children: List.generate(9, (index) {
