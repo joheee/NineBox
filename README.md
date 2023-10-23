@@ -1,10 +1,5 @@
 # mati_murup
 
-# Game that consists of 3 pages
-* setup page
-* game page
-* result page
-
 # Preface
 Game MatiMurup Square didesain agar dimainkan oleh dua pemain secara bergantian dalam
 satu device yang sama. Awal permainan memunculkan halaman Setup Permainan seperti
@@ -35,3 +30,14 @@ menekan kotak sesuai urutan dan menyelesaikan ronde ini.
 harus menekan tombol sesuai urutan: kotak 5 - 9 - 1 - 3 - 3 - 1 - 7 - 9
 * Jika pemain salah menekan urutan kotak, maka giliran pemain tersebut berakhir dan
 berganti ke pemain kedua.   
+
+# Game that consists of 3 pages
+* setup page
+* game page
+* result page
+
+# setup page
+* input pemain 1 dan 2
+* input jumlah ronde
+* input tingkat kesulitan (gampang, sedang, susah)
+* save konfigurasi di shared preferences
