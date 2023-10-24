@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/model/game.dart';
 import 'package:mati_murup/util/custom_result_round.dart';
 import 'package:mati_murup/util/custom_start_round.dart';
-import 'package:mati_murup/util/custom_text.dart';
 
 // ignore: must_be_immutable
 class BridgePage extends StatefulWidget {
-  int currRound;
+  int currRound,textRound;
   bool isFirstPlayer;
   Game game;
   List<String> winning;
+
   BridgePage({
     super.key,
+    required this.textRound,
     required this.currRound,
     required this.isFirstPlayer,
     required this.game,
@@ -24,11 +24,13 @@ class BridgePage extends StatefulWidget {
 }
 
 class _BridgePageState extends State<BridgePage> {
+
   @override
   Widget build(BuildContext context) {
-    if(widget.currRound % 3 != 0) {
+    if(widget.currRound == 1 || widget.currRound % 2 == 0) {
       return CustomStartRound(widget: widget);
-    } else {
+    }
+    else {
       return CustomResultRound(widget: widget);
     }
   }

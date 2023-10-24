@@ -17,7 +17,6 @@ class CustomStartRound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    int currRound = (widget.currRound / 2).floor();
     String currPlayer = (widget.isFirstPlayer ? widget.game.firstPlayer : widget.game.secondPlayer)!;
 
     void handleClick(){
@@ -28,6 +27,7 @@ class CustomStartRound extends StatelessWidget {
           isFirstPlayer: widget.isFirstPlayer,
           game: widget.game,
           winning: widget.winning,
+          textRound: widget.textRound,
         )
       );
     }
@@ -57,7 +57,7 @@ class CustomStartRound extends StatelessWidget {
         
         ElevatedButton(
           onPressed: handleClick, 
-          child: Text('mulai ronde ${currRound + 1}')
+          child: const Text('Mulai Bermain')
         )
       ]
     );

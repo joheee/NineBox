@@ -4,7 +4,6 @@ import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/layout/form_layout.dart';
 import 'package:mati_murup/model/game.dart';
 import 'package:mati_murup/page/bridge.dart';
-import 'package:mati_murup/page/game.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_dropdown.dart';
 import 'package:mati_murup/util/custom_page_change.dart';
@@ -96,6 +95,7 @@ class _SetupPageState extends State<SetupPage> {
             currRound: 1, 
             isFirstPlayer:true,
             winning: winningList,
+            textRound: 1,
             game: Game(
               difficulty: difficulty,
               firstPlayer: firstPlayerString,
