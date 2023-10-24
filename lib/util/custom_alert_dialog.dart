@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mati_murup/config/variable.dart';
 
 class CustomAlertDialog{
-  static void showErrorDialog(BuildContext context, String errorMessage, String closeMessage) {
+  static void showErrorDialog(BuildContext context, String errorMessage, String closeMessage, Function() onPressed) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -17,7 +17,7 @@ class CustomAlertDialog{
                 Text(errorMessage),
                 const SizedBox(height: 10.0,),
                 ElevatedButton(
-                  onPressed: () => Navigator.pop(context), 
+                  onPressed: onPressed, 
                   child: Text(closeMessage)
                 )
               ],
