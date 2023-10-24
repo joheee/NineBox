@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/model/game.dart';
+import 'package:mati_murup/page/bridge.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_game.dart';
 import 'package:mati_murup/util/custom_game_tile.dart';
@@ -71,6 +72,7 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     
     String? currPlayer = widget.isFirstPlayer ? widget.game.firstPlayer : widget.game.secondPlayer;
+    String? otherPlayer = !widget.isFirstPlayer ? widget.game.firstPlayer : widget.game.secondPlayer;
 
     void handleOnTap(int i) {
       if(i == patterns[0]) {
@@ -79,7 +81,7 @@ class _GamePageState extends State<GamePage> {
           widget.winning.add(currPlayer!);
           CustomPageChange.handleChange(
             context, 
-            GamePage(
+            BridgePage(
               currRound: widget.currRound + 1,
               isFirstPlayer: !widget.isFirstPlayer,
               game: widget.game,
@@ -88,7 +90,17 @@ class _GamePageState extends State<GamePage> {
           );
         }
       } else {
-        CustomAlertDialog.showErrorDialog(context, 'Sayang sekali $currPlayer, kamu menekan urutan yang salah', 'ok');
+        CustomAlertDialog.showErrorDialog(context, 'Sayang sekali $currPlayer, kamu menekan urutan yang salah', 'ok',() => Navigator.pop(context));
+        widget.winning.add(otherPlayer!);
+        CustomPageChange.handleChange(
+          context, 
+          BridgePage(
+            currRound: widget.currRound + 1,
+            isFirstPlayer: !widget.isFirstPlayer,
+            game: widget.game,
+            winning: widget.winning,
+          )
+        );
       }
       print(widget.winning);
       print(patterns);

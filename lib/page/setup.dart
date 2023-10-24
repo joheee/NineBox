@@ -3,6 +3,7 @@ import 'package:mati_murup/config/variable.dart';
 import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/layout/form_layout.dart';
 import 'package:mati_murup/model/game.dart';
+import 'package:mati_murup/page/bridge.dart';
 import 'package:mati_murup/page/game.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_dropdown.dart';
@@ -58,27 +59,27 @@ class _SetupPageState extends State<SetupPage> {
       String totalRoundString = totalRound.text;
 
       if(firstPlayerString.isEmpty) {
-        CustomAlertDialog.showErrorDialog(context, 'nama pemain 1 tidak boleh kosong!','tutup');
+        CustomAlertDialog.showErrorDialog(context, 'nama pemain 1 tidak boleh kosong!','tutup',() => Navigator.pop(context));
         return;
       }
       
       if(secondPlayerString.isEmpty) {
-        CustomAlertDialog.showErrorDialog(context, 'nama pemain 2 tidak boleh kosong!','tutup');
+        CustomAlertDialog.showErrorDialog(context, 'nama pemain 2 tidak boleh kosong!','tutup',() => Navigator.pop(context));
         return;
       }
       
       if(totalRoundString.isEmpty) {
-        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde tidak boleh kosong!','tutup');
+        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde tidak boleh kosong!','tutup',() => Navigator.pop(context));
         return;
       }
       
       if(!CustomValidation.isNumeric(totalRoundString)) {
-        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde harus berupa angka!','tutup');
+        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde harus berupa angka!','tutup',() => Navigator.pop(context));
         return;
       }
       
       if(int.parse(totalRoundString) < 1 || int.parse(totalRoundString) > 10) {
-        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde di antara 1-10!','tutup');
+        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde di antara 1-10!','tutup',() => Navigator.pop(context));
         return;
       }
 
@@ -91,7 +92,7 @@ class _SetupPageState extends State<SetupPage> {
 
         CustomPageChange.handleChange(
           context, 
-          GamePage(
+          BridgePage(
             currRound: 1, 
             isFirstPlayer:true,
             winning: winningList,
