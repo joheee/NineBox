@@ -34,6 +34,7 @@ class _GamePageState extends State<GamePage> {
   };
 
   List<int> patterns = [];
+  bool isFinishPattern = false;
   int currBox = 3;
 
   @override
@@ -41,7 +42,7 @@ class _GamePageState extends State<GamePage> {
     super.initState();
     patterns = CustomGame.generateRandomNumber(difficultyMap[widget.game.difficulty]!);
     tileDemo();
-  }
+  } 
 
   Future<void> tileDemo() async {
     for(int i=0; i<patterns.length;i++){
@@ -53,6 +54,12 @@ class _GamePageState extends State<GamePage> {
         currBox = 9;
       });
       await Future.delayed(const Duration(milliseconds: 300));
+
+      if(i == patterns.length - 1) {
+        setState(() {
+          isFinishPattern = true;
+        });
+      }
     }
   }
 
@@ -75,6 +82,10 @@ class _GamePageState extends State<GamePage> {
 
         CustomGameTile(
           curr: currBox,
+          isFinishPattern:isFinishPattern,
+          onTap: (int i) {
+            print(i);
+          },
         ),
         
         CustomText(
