@@ -6,6 +6,7 @@ import 'package:mati_murup/model/game.dart';
 import 'package:mati_murup/page/game.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_dropdown.dart';
+import 'package:mati_murup/util/custom_page_change.dart';
 import 'package:mati_murup/util/custom_text.dart';
 import 'package:mati_murup/util/custom_textfield.dart';
 import 'package:mati_murup/util/custom_validation.dart';
@@ -87,16 +88,19 @@ class _SetupPageState extends State<SetupPage> {
         value.setString('totalRound', totalRoundString);
         value.setString('difficulty', difficulty);
 
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GamePage(
-          currRound: 1, 
-          isFirstPlayer:true,
-          game: Game(
-            difficulty: difficulty,
-            firstPlayer: firstPlayerString,
-            secondPlayer: secondPlayerString,
-            totalRound: int.parse(totalRoundString)
-          ),
-        )));
+        CustomPageChange.handleChange(
+          context, 
+          GamePage(
+            currRound: 1, 
+            isFirstPlayer:true,
+            game: Game(
+              difficulty: difficulty,
+              firstPlayer: firstPlayerString,
+              secondPlayer: secondPlayerString,
+              totalRound: int.parse(totalRoundString)
+            ),
+          )
+        );
       });
     }
 

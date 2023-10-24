@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/model/game.dart';
+import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_game.dart';
 import 'package:mati_murup/util/custom_game_tile.dart';
+import 'package:mati_murup/util/custom_page_change.dart';
 import 'package:mati_murup/util/custom_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,7 +28,6 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
 
   final Future<SharedPreferences> sharePref = SharedPreferences.getInstance();
-  
   final Map<String, int> difficultyMap = {
     "Gampang":5,
     "Sedang":8,
@@ -65,11 +66,32 @@ class _GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
+    
+    void handleOnTap(int i) {
+      if(i == patterns[0]) {
+        patterns.removeAt(0);
+        if (patterns.isEmpty) {
+          CustomPageChange.handleChange(
+            context, 
+            GamePage(
+              currRound: widget.currRound + 1,
+              isFirstPlayer: !widget.isFirstPlayer,
+              game: widget.game,
+            )
+          );
+        }
+      } else {
+        CustomAlertDialog.showErrorDialog(context, 'salah patternnya bang');
+      }
+      print(patterns);
+      print(widget.currRound);
+    }
+
     return DefaultLayout(
       children: [
 
         CustomText(
-          text: 'Giliran ${widget.game.firstPlayer}', 
+          text: 'Giliran ${widget.isFirstPlayer ? widget.game.firstPlayer : widget.game.secondPlayer}', 
           fontWeight: FontWeight.normal
         ),
 
@@ -83,9 +105,7 @@ class _GamePageState extends State<GamePage> {
         CustomGameTile(
           curr: currBox,
           isFinishPattern:isFinishPattern,
-          onTap: (int i) {
-            print(i);
-          },
+          onTap: handleOnTap,
         ),
         
         CustomText(
