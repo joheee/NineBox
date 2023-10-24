@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/model/game.dart';
@@ -32,14 +34,26 @@ class _GamePageState extends State<GamePage> {
   };
 
   List<int> patterns = [];
-
   int currBox = 3;
 
   @override
   void initState() {
     super.initState();
     patterns = CustomGame.generateRandomNumber(difficultyMap[widget.game.difficulty]!);
-    print(patterns);
+    tileDemo();
+  }
+
+  Future<void> tileDemo() async {
+    for(int i=0; i<patterns.length;i++){
+      setState(() {
+        currBox = patterns[i];
+      });
+      await Future.delayed(const Duration(milliseconds: 500));
+      setState(() {
+        currBox = 9;
+      });
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
   }
 
   @override

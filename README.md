@@ -41,3 +41,10 @@ berganti ke pemain kedua.
 * input jumlah ronde
 * input tingkat kesulitan (gampang, sedang, susah)
 * save konfigurasi di shared preferences
+
+# main page
+* rekursif page (sampe ke akhir ronde)
+* validasi urutan box yang diteken sama dengan yang didefine
+* naikkin current round
+* generate random pattern
+* simpen siapa yang menang tiap round
