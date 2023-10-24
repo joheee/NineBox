@@ -1,7 +1,7 @@
-# mati_murup
+# Nine Box
 
 # Preface
-Game MatiMurup Square didesain agar dimainkan oleh dua pemain secara bergantian dalam
+Game Nine Box didesain agar dimainkan oleh dua pemain secara bergantian dalam
 satu device yang sama. Awal permainan memunculkan halaman Setup Permainan seperti
 tampak pada gambar 1 dibawah ini. Pemain diharuskan memasukkan nama pemain 1 dan 2,
 jumlah ronde, serta tingkat kesulitan yang terdiri dari tiga yakni:
