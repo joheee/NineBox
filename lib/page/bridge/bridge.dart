@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mati_murup/model/game.dart';
-import 'package:mati_murup/util/custom_result_round.dart';
-import 'package:mati_murup/util/custom_start_round.dart';
+import 'package:mati_murup/page/bridge/bridge_presenter.dart';
 
 // ignore: must_be_immutable
 class BridgePage extends StatefulWidget {
@@ -27,11 +26,8 @@ class _BridgePageState extends State<BridgePage> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.currRound == 1 || widget.currRound % 2 == 0) {
-      return CustomStartRound(widget: widget);
-    }
-    else {
-      return CustomResultRound(widget: widget);
-    }
+    return BridgePagePresenter(
+      widget:widget
+    );
   }
 }

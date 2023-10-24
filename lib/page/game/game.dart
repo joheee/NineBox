@@ -1,15 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/model/game.dart';
-import 'package:mati_murup/page/bridge.dart';
+import 'package:mati_murup/page/bridge/bridge.dart';
+import 'package:mati_murup/page/game/game_presenter.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_game.dart';
-import 'package:mati_murup/util/custom_game_tile.dart';
 import 'package:mati_murup/util/custom_page_change.dart';
-import 'package:mati_murup/util/custom_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -110,40 +107,13 @@ class _GamePageState extends State<GamePage> {
       }
     }
 
-
-    return DefaultLayout(
-      children: [
-
-        CustomText(
-          text: 'Giliran $currPlayer', 
-          fontWeight: FontWeight.normal
-        ),
-
-        const SizedBox(height: 20.0),
-
-        const CustomText(
-          text: 'Hapalkan Polanya', 
-          fontWeight: FontWeight.bold
-        ),
-
-        CustomGameTile(
-          curr: currBox,
-          isFinishPattern:isFinishPattern,
-          onTap: handleOnTap,
-        ),
-        
-        CustomText(
-          text: 'Ronde ${widget.textRound}', 
-          fontWeight: FontWeight.normal
-        ),
-        
-        const SizedBox(height: 20.0),
-
-        CustomText(
-          text: 'Level: ${widget.game.difficulty}', 
-          fontWeight: FontWeight.normal
-        ),
-      ]
+    return GamePagePresenter(
+      currPlayer: currPlayer, 
+      currBox: currBox, 
+      isFinishPattern: isFinishPattern, 
+      widget: widget, 
+      onTap: handleOnTap
     );
   }
 }
+
