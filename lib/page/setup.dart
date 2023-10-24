@@ -26,6 +26,7 @@ class _SetupPageState extends State<SetupPage> {
   TextEditingController secondPlayer = TextEditingController();
   TextEditingController totalRound = TextEditingController();
   String difficulty = 'Gampang';
+  final List<String> winningList = [];
 
   @override
   void initState() {
@@ -57,27 +58,27 @@ class _SetupPageState extends State<SetupPage> {
       String totalRoundString = totalRound.text;
 
       if(firstPlayerString.isEmpty) {
-        CustomAlertDialog.showErrorDialog(context, 'nama pemain 1 tidak boleh kosong!');
+        CustomAlertDialog.showErrorDialog(context, 'nama pemain 1 tidak boleh kosong!','tutup');
         return;
       }
       
       if(secondPlayerString.isEmpty) {
-        CustomAlertDialog.showErrorDialog(context, 'nama pemain 2 tidak boleh kosong!');
+        CustomAlertDialog.showErrorDialog(context, 'nama pemain 2 tidak boleh kosong!','tutup');
         return;
       }
       
       if(totalRoundString.isEmpty) {
-        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde tidak boleh kosong!');
+        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde tidak boleh kosong!','tutup');
         return;
       }
       
       if(!CustomValidation.isNumeric(totalRoundString)) {
-        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde harus berupa angka!');
+        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde harus berupa angka!','tutup');
         return;
       }
       
       if(int.parse(totalRoundString) < 1 || int.parse(totalRoundString) > 10) {
-        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde di antara 1-10!');
+        CustomAlertDialog.showErrorDialog(context, 'jumlah ronde di antara 1-10!','tutup');
         return;
       }
 
@@ -93,6 +94,7 @@ class _SetupPageState extends State<SetupPage> {
           GamePage(
             currRound: 1, 
             isFirstPlayer:true,
+            winning: winningList,
             game: Game(
               difficulty: difficulty,
               firstPlayer: firstPlayerString,
@@ -116,6 +118,7 @@ class _SetupPageState extends State<SetupPage> {
 
         FormLayout(
           children: [
+
             CustomTextfield(
               text: "Pemain #1",
               icon: Icon(
@@ -124,7 +127,9 @@ class _SetupPageState extends State<SetupPage> {
               ),
               controller: firstPlayer,
             ),
+
             const SizedBox(height: 10.0),
+
             CustomTextfield(
               text: "Pemain #2",
               icon: Icon(
@@ -133,7 +138,9 @@ class _SetupPageState extends State<SetupPage> {
               ),
               controller: secondPlayer,
             ),
+
             const SizedBox(height: 10.0),
+            
             CustomTextfield(
               text: "Jumlah Ronde",
               icon: Icon(

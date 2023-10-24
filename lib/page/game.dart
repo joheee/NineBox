@@ -10,16 +10,19 @@ import 'package:mati_murup/util/custom_page_change.dart';
 import 'package:mati_murup/util/custom_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class GamePage extends StatefulWidget {
-  final int currRound;
-  final bool isFirstPlayer;
-  final Game game;
+  int currRound;
+  bool isFirstPlayer;
+  Game game;
+  List<String> winning;
 
-  const GamePage({
+  GamePage({
     super.key,
     required this.currRound,
     required this.isFirstPlayer,
     required this.game,
+    required this.winning,
   });
 
   @override
@@ -67,22 +70,27 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     
+    String? currPlayer = widget.isFirstPlayer ? widget.game.firstPlayer : widget.game.secondPlayer;
+
     void handleOnTap(int i) {
       if(i == patterns[0]) {
         patterns.removeAt(0);
         if (patterns.isEmpty) {
+          widget.winning.add(currPlayer!);
           CustomPageChange.handleChange(
             context, 
             GamePage(
               currRound: widget.currRound + 1,
               isFirstPlayer: !widget.isFirstPlayer,
               game: widget.game,
+              winning: widget.winning,
             )
           );
         }
       } else {
-        CustomAlertDialog.showErrorDialog(context, 'salah patternnya bang');
+        CustomAlertDialog.showErrorDialog(context, 'Sayang sekali $currPlayer, kamu menekan urutan yang salah', 'ok');
       }
+      print(widget.winning);
       print(patterns);
       print(widget.currRound);
     }
@@ -91,7 +99,7 @@ class _GamePageState extends State<GamePage> {
       children: [
 
         CustomText(
-          text: 'Giliran ${widget.isFirstPlayer ? widget.game.firstPlayer : widget.game.secondPlayer}', 
+          text: 'Giliran $currPlayer', 
           fontWeight: FontWeight.normal
         ),
 
@@ -109,9 +117,10 @@ class _GamePageState extends State<GamePage> {
         ),
         
         CustomText(
-          text: 'Ronde ${widget.currRound}', 
+          text: 'Ronde ${(widget.currRound / 2).floor()}', 
           fontWeight: FontWeight.normal
         ),
+        
         const SizedBox(height: 20.0),
 
         CustomText(
