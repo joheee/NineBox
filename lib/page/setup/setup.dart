@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mati_murup/config/variable.dart';
-import 'package:mati_murup/layout/default_layout.dart';
-import 'package:mati_murup/layout/form_layout.dart';
 import 'package:mati_murup/model/game.dart';
-import 'package:mati_murup/page/bridge.dart';
+import 'package:mati_murup/page/bridge/bridge.dart';
+import 'package:mati_murup/page/setup/setup_presenter.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
-import 'package:mati_murup/util/custom_dropdown.dart';
 import 'package:mati_murup/util/custom_page_change.dart';
-import 'package:mati_murup/util/custom_text.dart';
-import 'package:mati_murup/util/custom_textfield.dart';
 import 'package:mati_murup/util/custom_validation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,9 +34,6 @@ class _SetupPageState extends State<SetupPage> {
     });
     sharePref.then((SharedPreferences prefs) {
       totalRound.text = prefs.getString('totalRound') ?? '1';
-    });
-    sharePref.then((SharedPreferences prefs) {
-      difficulty = prefs.getString('difficulty') ?? 'Gampang';
     });
   }
 
@@ -82,7 +74,6 @@ class _SetupPageState extends State<SetupPage> {
         return;
       }
 
-      // STORE TO SHAREPREFS
       sharePref.then((value) {
         value.setString('firstPlayer', firstPlayerString);
         value.setString('secondPlayer', secondPlayerString);
@@ -107,65 +98,13 @@ class _SetupPageState extends State<SetupPage> {
       });
     }
 
-    return DefaultLayout(
-      children: [
-
-        const CustomText(
-          text: 'Setup Permainan', 
-          fontWeight: FontWeight.bold
-        ),
-        
-        const SizedBox(height: 20.0),
-
-        FormLayout(
-          children: [
-
-            CustomTextfield(
-              text: "Pemain #1",
-              icon: Icon(
-                Icons.person,
-                color: Variable.secondaryColor,
-              ),
-              controller: firstPlayer,
-            ),
-
-            const SizedBox(height: 10.0),
-
-            CustomTextfield(
-              text: "Pemain #2",
-              icon: Icon(
-                Icons.person,
-                color: Variable.secondaryColor,
-              ),
-              controller: secondPlayer,
-            ),
-
-            const SizedBox(height: 10.0),
-            
-            CustomTextfield(
-              text: "Jumlah Ronde",
-              icon: Icon(
-                Icons.play_arrow,
-                color: Variable.secondaryColor,
-              ),
-              controller: totalRound,
-            ),
-          ]
-        ),
-
-        CustomDropdown(
-          list: list,
-          onSelected: handleDropdown,  
-        ),
-
-        const SizedBox(height: 20.0),
-
-        ElevatedButton(
-          onPressed: handleStart, 
-          child: const Text('Mulai')
-        )
-      ],
+    return SetupPagePresenter(
+      firstPlayer: firstPlayer, 
+      secondPlayer: secondPlayer, 
+      totalRound: totalRound, 
+      onPressed: handleStart,
+      onSelected: handleDropdown,
+      list: list,
     );
   }
 }
-

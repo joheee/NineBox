@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mati_murup/page/setup.dart';
+import 'package:mati_murup/page/setup/setup.dart';
 
 void main() {
   runApp(const MaterialApp(

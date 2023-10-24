@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:mati_murup/layout/default_layout.dart';
-import 'package:mati_murup/page/bridge.dart';
-import 'package:mati_murup/page/game.dart';
+import 'package:mati_murup/page/bridge/bridge.dart';
+import 'package:mati_murup/page/game/game.dart';
+import 'package:mati_murup/page/result/result.dart';
 import 'package:mati_murup/util/custom_page_change.dart';
 import 'package:mati_murup/util/custom_text.dart';
 
@@ -32,7 +33,11 @@ class CustomResultRound extends StatelessWidget {
           )
         );
       } else {
-        print(widget.winning);
+        CustomPageChange.handleChange(
+          context, 
+          ResultPage(widget: widget,
+          )
+        );
       }
     }
 
