@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/model/game.dart';
@@ -13,13 +14,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class GamePage extends StatefulWidget {
-  int currRound;
+  int currRound,textRound;
   bool isFirstPlayer;
   Game game;
   List<String> winning;
 
   GamePage({
     super.key,
+    required this.textRound,
     required this.currRound,
     required this.isFirstPlayer,
     required this.game,
@@ -86,26 +88,28 @@ class _GamePageState extends State<GamePage> {
               isFirstPlayer: !widget.isFirstPlayer,
               game: widget.game,
               winning: widget.winning,
+              textRound: widget.textRound,
             )
           );
         }
       } else {
-        CustomAlertDialog.showErrorDialog(context, 'Sayang sekali $currPlayer, kamu menekan urutan yang salah', 'ok',() => Navigator.pop(context));
-        widget.winning.add(otherPlayer!);
-        CustomPageChange.handleChange(
-          context, 
-          BridgePage(
-            currRound: widget.currRound + 1,
-            isFirstPlayer: !widget.isFirstPlayer,
-            game: widget.game,
-            winning: widget.winning,
-          )
-        );
+        CustomAlertDialog.showErrorDialog(context, 'Sayang sekali $currPlayer, kamu menekan urutan yang salah', 'ok',()  {
+          Navigator.pop(context);
+          widget.winning.add(otherPlayer!);
+          CustomPageChange.handleChange(
+            context, 
+            BridgePage(
+              currRound: widget.currRound + 1,
+              isFirstPlayer: !widget.isFirstPlayer,
+              game: widget.game,
+              winning: widget.winning,
+              textRound: widget.textRound,
+            )
+          );
+        });
       }
-      print(widget.winning);
-      print(patterns);
-      print(widget.currRound);
     }
+
 
     return DefaultLayout(
       children: [
@@ -129,7 +133,7 @@ class _GamePageState extends State<GamePage> {
         ),
         
         CustomText(
-          text: 'Ronde ${(widget.currRound / 2).floor()}', 
+          text: 'Ronde ${widget.textRound}', 
           fontWeight: FontWeight.normal
         ),
         

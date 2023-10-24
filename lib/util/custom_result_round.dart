@@ -20,16 +20,25 @@ class CustomResultRound extends StatelessWidget {
     int currRound = (widget.currRound / 2).floor();
 
     void handleClick(){
-      CustomPageChange.handleChange(
-        context, 
-        GamePage(
-          currRound: widget.currRound,
-          isFirstPlayer: widget.isFirstPlayer,
-          game: widget.game,
-          winning: widget.winning,
-        )
-      );
+      if(widget.winning.length < widget.game.totalRound! * 2) {
+        CustomPageChange.handleChange(
+          context, 
+          GamePage(
+            currRound: widget.currRound,
+            isFirstPlayer: widget.isFirstPlayer,
+            game: widget.game,
+            winning: widget.winning,
+            textRound: widget.textRound + 1,
+          )
+        );
+      } else {
+        print(widget.winning);
+      }
     }
+
+    int right = widget.currRound - 2;
+    int left = right - 1;
+
 
     return DefaultLayout(
       children: [
@@ -46,18 +55,17 @@ class CustomResultRound extends StatelessWidget {
           fontWeight: FontWeight.bold
         ),
         
-        
-        const Padding(
-          padding: EdgeInsets.all(150.0),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0,150.0,0,150.0),
           child: CustomText(
-            text: 'Seimbang', 
+            text: widget.winning[right] == widget.winning[left] ? '${widget.winning[right]} menang' : 'seimbang', 
             fontWeight: FontWeight.bold
           ),
         ),
         
         ElevatedButton(
           onPressed: handleClick, 
-          child: Text('Lanjut Ronde ${currRound + 1}')
+          child: const Text('Lanjut Bermain')
         )
       ]
     );
