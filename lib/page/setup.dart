@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mati_murup/config/variable.dart';
 import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/layout/form_layout.dart';
+import 'package:mati_murup/model/game.dart';
 import 'package:mati_murup/page/game.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_dropdown.dart';
@@ -86,7 +87,16 @@ class _SetupPageState extends State<SetupPage> {
         value.setString('totalRound', totalRoundString);
         value.setString('difficulty', difficulty);
 
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GamePage(currRound: 1, isFirstPlayer:true)));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GamePage(
+          currRound: 1, 
+          isFirstPlayer:true,
+          game: Game(
+            difficulty: difficulty,
+            firstPlayer: firstPlayerString,
+            secondPlayer: secondPlayerString,
+            totalRound: int.parse(totalRoundString)
+          ),
+        )));
       });
     }
 

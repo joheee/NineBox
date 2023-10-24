@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mati_murup/layout/default_layout.dart';
+import 'package:mati_murup/model/game.dart';
+import 'package:mati_murup/util/custom_game.dart';
 import 'package:mati_murup/util/custom_game_tile.dart';
 import 'package:mati_murup/util/custom_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,11 +9,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class GamePage extends StatefulWidget {
   final int currRound;
   final bool isFirstPlayer;
+  final Game game;
 
   const GamePage({
     super.key,
     required this.currRound,
     required this.isFirstPlayer,
+    required this.game,
   });
 
   @override
@@ -21,35 +25,21 @@ class _GamePageState extends State<GamePage> {
 
   final Future<SharedPreferences> sharePref = SharedPreferences.getInstance();
   
+  final Map<String, int> difficultyMap = {
+    "Gampang":5,
+    "Sedang":8,
+    "Susah":12,
+  };
+
+  List<int> patterns = [];
+
   int currBox = 3;
-  String firstPlayer = '';
-  String secondPlayer = '';
-  int totalRound = 1;
-  String difficulty = '';
 
   @override
   void initState() {
     super.initState();
-    sharePref.then((SharedPreferences prefs) {
-      setState(() {
-        firstPlayer = prefs.getString('firstPlayer') ?? '';
-      });
-    });
-    sharePref.then((SharedPreferences prefs) {
-      setState(() {
-        secondPlayer = prefs.getString('secondPlayer') ?? '';
-      });
-    });
-    sharePref.then((SharedPreferences prefs) {
-      setState(() {
-        totalRound = prefs.getInt('totalRound') ?? 1;
-      });
-    });
-    sharePref.then((SharedPreferences prefs) {
-      setState(() {
-        difficulty = prefs.getString('difficulty') ?? 'Gampang';
-      });
-    });
+    patterns = CustomGame.generateRandomNumber(difficultyMap[widget.game.difficulty]!);
+    print(patterns);
   }
 
   @override
@@ -58,7 +48,7 @@ class _GamePageState extends State<GamePage> {
       children: [
 
         CustomText(
-          text: 'Giliran $firstPlayer', 
+          text: 'Giliran ${widget.game.firstPlayer}', 
           fontWeight: FontWeight.normal
         ),
 
@@ -80,7 +70,7 @@ class _GamePageState extends State<GamePage> {
         const SizedBox(height: 20.0),
 
         CustomText(
-          text: 'Level: $difficulty', 
+          text: 'Level: ${widget.game.difficulty}', 
           fontWeight: FontWeight.normal
         ),
       ]
