@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mati_murup/page/game.dart';
+import 'package:mati_murup/page/setup.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -12,6 +12,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GamePage();
+    return const SetupPage();
   }
 }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mati_murup/config/variable.dart';
 import 'package:mati_murup/layout/default_layout.dart';
 import 'package:mati_murup/layout/form_layout.dart';
+import 'package:mati_murup/page/game.dart';
 import 'package:mati_murup/util/custom_alert_dialog.dart';
 import 'package:mati_murup/util/custom_dropdown.dart';
+import 'package:mati_murup/util/custom_text.dart';
 import 'package:mati_murup/util/custom_textfield.dart';
 import 'package:mati_murup/util/custom_validation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -83,20 +85,19 @@ class _SetupPageState extends State<SetupPage> {
         value.setString('secondPlayer', secondPlayerString);
         value.setString('totalRound', totalRoundString);
         value.setString('difficulty', difficulty);
+
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const GamePage(currRound: 1, isFirstPlayer:true)));
       });
     }
 
     return DefaultLayout(
       children: [
 
-        const Text(
-          'Setup Permainan',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        const CustomText(
+          text: 'Setup Permainan', 
+          fontWeight: FontWeight.bold
         ),
-
+        
         const SizedBox(height: 20.0),
 
         FormLayout(
