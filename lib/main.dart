@@ -3,6 +3,7 @@ import 'package:mati_murup/page/setup/setup.dart';
 
 void main() {
   runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: MyApp(),
   ));
 }
